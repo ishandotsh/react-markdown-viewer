@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import Nav from "./components/Nav";
+const marked = require("marked");
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			markdown: "",
+		};
+
+		this.handleChange = this.handleChange.bind(this);
+	}
+	handleChange(event) {
+		this.setState({ markdown: event.target.value });
+	}
+	render() {
+		return (
+			<div className="">
+				<Nav />
+				<div className="App">
+					<div id="textarea">
+						<h3>Markdown</h3>
+						<textarea
+							id="area"
+							value={this.state.markdown}
+							onChange={this.handleChange}
+						></textarea>
+					</div>
+					<div id="viewer">
+						<h3>Preview</h3>
+						<div
+							dangerouslySetInnerHTML={{ __html: marked(this.state.markdown) }}
+						></div>
+					</div>
+				</div>
+			</div>
+		);
+	}
 }
-
 export default App;
